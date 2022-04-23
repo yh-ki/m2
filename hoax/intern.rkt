@@ -26,5 +26,3 @@
     [(Let x e1 e2) (count-str e1 (count-str e2 l))]
     )
   )
-
-(Let (string->symbol s) (Str s) (Var (string->symbol s)))
