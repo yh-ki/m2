@@ -5,7 +5,7 @@
 ;; Expr -> Expr
 (define (intern e)
   ;; TODO
-  e
+  (make-e (var-str e) (count-str e '()))
   )
 
 (define (count-str e l)
@@ -26,6 +26,30 @@
     [(Let x e1 e2) (count-str e1 (count-str e2 l))]
     )
   )
+
+(define (var-str e)
+  (match e
+    [(Int i) (Int i)]
+    [(Bool b) (Bool b)]
+    [(Char c) (Char c)]
+    [(Eof) (Eof)]
+    [(Empty) (Empty)]
+    [(Var x) (Var x)]
+    [(Str s) (Var (string->symbol s))]
+    [(Prim0 p) (Prim0 p)]
+    [(Prim1 p e) (Prim1 p (var-str e)) ]
+    [(Prim2 p e1 e2) (Prim2 p (var-str e1) (var-str e2))]
+    [(Prim3 p e1 e2 e3) (Prim3 p (var-str e1) (var-str e2) (var-str e3))]
+    [(If e1 e2 e3) (If (var-str e1) (var-str e2) (var-str e3))]
+    [(Begin e1 e2) (Begin (var-str e1) (var-str e2))]
+    [(Let x e1 e2) (Let x (var-str e1) (var-str e2))]
+    )
+  )
+
+(define (make-e e l)
+  (match l
+    ['() e]
+    [(cons s l) (make-e (Let (string->symbol s) (Str s) e) l)]))
 
 ;(define (replace-str e l)
 ;  (match l
