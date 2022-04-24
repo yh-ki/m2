@@ -27,11 +27,11 @@
     )
   )
 
-(define (replace-str e l)
-  (match l
-    ['() e]
-    [(cons s l) (contain-str e s)])
-  )
+;(define (replace-str e l)
+;  (match l
+;    ['() e]
+;    [(cons s l) (contain-str e s)])
+;  )
 
 ;(define (contain-str e l)
 ;  (match e
